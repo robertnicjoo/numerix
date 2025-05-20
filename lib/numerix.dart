@@ -177,7 +177,6 @@
 //   };
 // }
 
-
 class Numerix {
   final String languageCode;
   final String decimalSeparator;
@@ -214,20 +213,16 @@ class Numerix {
       }
     }
     final reversed = buffer.toString().split('').reversed.join('');
-    return _localizeDigits(decimalPart.isEmpty
-        ? reversed
-        : '$reversed$decimalSeparator$decimalPart');
+    return _localizeDigits(
+      decimalPart.isEmpty ? reversed : '$reversed$decimalSeparator$decimalPart',
+    );
   }
 
   // 2. Format compact (K, M, B, T) with localization
   String formatCompact(num number) {
-    final suffixes = LocaleData.suffixes[languageCode] ?? LocaleData.suffixes['en']!;
-    const divisors = {
-      'T': 1e12,
-      'B': 1e9,
-      'M': 1e6,
-      'K': 1e3,
-    };
+    final suffixes =
+        LocaleData.suffixes[languageCode] ?? LocaleData.suffixes['en']!;
+    const divisors = {'T': 1e12, 'B': 1e9, 'M': 1e6, 'K': 1e3};
 
     for (final suffix in ['T', 'B', 'M', 'K']) {
       final divisor = divisors[suffix]!;
@@ -243,7 +238,8 @@ class Numerix {
 
   // 3. Format ordinal (1st, 2nd, etc.), with prefix support
   String formatOrdinal(int number) {
-    final ordinalData = LocaleData.ordinals[languageCode] ?? LocaleData.ordinals['en']!;
+    final ordinalData =
+        LocaleData.ordinals[languageCode] ?? LocaleData.ordinals['en']!;
     final prefix = ordinalData['prefix'] ?? '';
     final suffix = ordinalData['suffix'] ?? '';
 
@@ -268,16 +264,18 @@ class Numerix {
   }
 
   // 4. Format currency with symbol, placement, spacing
-  String formatCurrency(num number, {
+  String formatCurrency(
+    num number, {
     String symbol = '\$',
     bool symbolBefore = true,
     int decimalPlaces = 2,
     String? spaceBetweenSymbol,
     bool useSeparators = true,
   }) {
-    final formattedNumber = useSeparators
-        ? formatWithSeparators(number, decimalPlaces: decimalPlaces)
-        : number.toStringAsFixed(decimalPlaces);
+    final formattedNumber =
+        useSeparators
+            ? formatWithSeparators(number, decimalPlaces: decimalPlaces)
+            : number.toStringAsFixed(decimalPlaces);
 
     final space = spaceBetweenSymbol ?? '';
 
@@ -289,7 +287,11 @@ class Numerix {
   }
 
   // 5. Format percentage with optional decimals and symbol
-  String formatPercentage(num number, {int decimalPlaces = 2, String symbol = '%'}) {
+  String formatPercentage(
+    num number, {
+    int decimalPlaces = 2,
+    String symbol = '%',
+  }) {
     final value = (number * 100).toStringAsFixed(decimalPlaces);
     return _localizeDigits('$value$symbol');
   }
@@ -378,18 +380,42 @@ class Numerix {
     if (number == 0) return 'zero';
 
     final units = [
-      '', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'
+      '',
+      'one',
+      'two',
+      'three',
+      'four',
+      'five',
+      'six',
+      'seven',
+      'eight',
+      'nine',
     ];
     final teens = [
-      'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen',
-      'sixteen', 'seventeen', 'eighteen', 'nineteen'
+      'ten',
+      'eleven',
+      'twelve',
+      'thirteen',
+      'fourteen',
+      'fifteen',
+      'sixteen',
+      'seventeen',
+      'eighteen',
+      'nineteen',
     ];
     final tens = [
-      '', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'
+      '',
+      '',
+      'twenty',
+      'thirty',
+      'forty',
+      'fifty',
+      'sixty',
+      'seventy',
+      'eighty',
+      'ninety',
     ];
-    final thousands = [
-      '', 'thousand', 'million', 'billion', 'trillion'
-    ];
+    final thousands = ['', 'thousand', 'million', 'billion', 'trillion'];
 
     String convertHundreds(int n) {
       String str = '';
@@ -433,7 +459,8 @@ class Numerix {
 
   // 12. Format byte size (human readable)
   String formatByteSize(num bytes, {int decimalPlaces = 2}) {
-    final units = LocaleData.byteUnits[languageCode] ?? LocaleData.byteUnits['en']!;
+    final units =
+        LocaleData.byteUnits[languageCode] ?? LocaleData.byteUnits['en']!;
 
     if (bytes < 1024) return '$bytes B';
     int i = 0;
@@ -442,7 +469,9 @@ class Numerix {
       size /= 1024;
       i++;
     }
-    return _localizeDigits('${size.toStringAsFixed(decimalPlaces)} ${units[i]}');
+    return _localizeDigits(
+      '${size.toStringAsFixed(decimalPlaces)} ${units[i]}',
+    );
   }
 
   // 13. Format with leading zeros/padding
@@ -457,10 +486,11 @@ class Numerix {
     return _localizeDigits(number.toString());
   }
 
-
   // 15. Format duration from seconds to h m s
   String formatDuration(int totalSeconds) {
-    final units = LocaleData.durationUnits[languageCode] ?? LocaleData.durationUnits['en']!;
+    final units =
+        LocaleData.durationUnits[languageCode] ??
+        LocaleData.durationUnits['en']!;
 
     final hours = totalSeconds ~/ 3600;
     final minutes = (totalSeconds % 3600) ~/ 60;
@@ -501,14 +531,14 @@ class LocaleData {
     'ca': {'prefix': '', 'suffix': 'è'},
     'gb': {'prefix': '', 'suffix': ''},
     'de': {'prefix': '', 'suffix': '.'},
-    'jp': {'prefix': '', 'suffix': '番'},  // Japanese ordinal indicator
-    'ru': {'prefix': '', 'suffix': '-й'},  // Russian ordinal suffix
+    'jp': {'prefix': '', 'suffix': '番'}, // Japanese ordinal indicator
+    'ru': {'prefix': '', 'suffix': '-й'}, // Russian ordinal suffix
     'kr': {'prefix': '', 'suffix': '번째'}, // Korean ordinal suffix
-    'cn': {'prefix': '第', 'suffix': ''},   // Chinese ordinal prefix
-    'pt': {'prefix': '', 'suffix': 'º'},   // Portuguese
-    'nl': {'prefix': '', 'suffix': 'de'},  // Dutch ordinal suffix
-    'se': {'prefix': '', 'suffix': 'e'},   // Swedish ordinal suffix
-    'pl': {'prefix': '', 'suffix': '.'},   // Polish ordinal suffix
+    'cn': {'prefix': '第', 'suffix': ''}, // Chinese ordinal prefix
+    'pt': {'prefix': '', 'suffix': 'º'}, // Portuguese
+    'nl': {'prefix': '', 'suffix': 'de'}, // Dutch ordinal suffix
+    'se': {'prefix': '', 'suffix': 'e'}, // Swedish ordinal suffix
+    'pl': {'prefix': '', 'suffix': '.'}, // Polish ordinal suffix
   };
 
   static const byteUnits = {
@@ -516,8 +546,24 @@ class LocaleData {
     'fr': ['o', 'Ko', 'Mo', 'Go', 'To', 'Po', 'Eo'],
     'de': ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB'],
     'es': ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB'],
-    'fa': ['بایت', 'کیلوبایت', 'مگابایت', 'گیگابایت', 'ترابایت', 'پتابایت', 'اگزابایت'],
-    'ar': ['بايت', 'كيلوبايت', 'ميغابايت', 'غيغابايت', 'تيرابايت', 'بيتابايت', 'إكسابايت'],
+    'fa': [
+      'بایت',
+      'کیلوبایت',
+      'مگابایت',
+      'گیگابایت',
+      'ترابایت',
+      'پتابایت',
+      'اگزابایت',
+    ],
+    'ar': [
+      'بايت',
+      'كيلوبايت',
+      'ميغابايت',
+      'غيغابايت',
+      'تيرابايت',
+      'بيتابايت',
+      'إكسابايت',
+    ],
     'ru': ['Б', 'КБ', 'МБ', 'ГБ', 'ТБ', 'ПБ', 'ЭБ'],
     'zh': ['字节', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB'],
     'ja': ['バイト', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB'],
@@ -536,8 +582,30 @@ class LocaleData {
   };
 
   static const digitMaps = {
-    'fa': {'0': '۰', '1': '۱', '2': '۲', '3': '۳', '4': '۴', '5': '۵', '6': '۶', '7': '۷', '8': '۸', '9': '۹'},
-    'ar': {'0': '٠', '1': '١', '2': '٢', '3': '٣', '4': '٤', '5': '٥', '6': '٦', '7': '٧', '8': '٨', '9': '٩'},
+    'fa': {
+      '0': '۰',
+      '1': '۱',
+      '2': '۲',
+      '3': '۳',
+      '4': '۴',
+      '5': '۵',
+      '6': '۶',
+      '7': '۷',
+      '8': '۸',
+      '9': '۹',
+    },
+    'ar': {
+      '0': '٠',
+      '1': '١',
+      '2': '٢',
+      '3': '٣',
+      '4': '٤',
+      '5': '٥',
+      '6': '٦',
+      '7': '٧',
+      '8': '٨',
+      '9': '٩',
+    },
     // Extend to other languages if needed
   };
 }
