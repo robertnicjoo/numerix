@@ -32,10 +32,12 @@ void main() {
 
     test('supports different locales suffixes', () {
       final numerixFr = Numerix(languageCode: 'fr');
-      expect(numerixFr.formatCompact(1500), '1.5k'); // French 'k'
+      // French 'k'
+      expect(numerixFr.formatCompact(1500), '1.5k');
 
       final numerixId = Numerix(languageCode: 'id');
-      expect(numerixId.formatCompact(1500), '1.5rb'); // Indonesian 'rb'
+      // Indonesian 'rb'
+      expect(numerixId.formatCompact(1500), '1.5rb');
     });
   });
 }

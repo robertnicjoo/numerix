@@ -1,6 +1,6 @@
 name: numerix
 description: "A cross-platform number formatting package with localization, compact mode, and ordinal support.  By PT. Nicxon International Solutions"
-version: 1.0.0
+version: 1.0.1
 homepage: https://github.com/robertnicjoo/numerix
 repository: https://github.com/robertnicjoo/numerix
 issue_tracker: https://github.com/robertnicjoo/numerix/issues

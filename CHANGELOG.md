@@ -2,6 +2,9 @@
 
 All notable changes to the NumeriX package will be documented in this file.
 
+## [1.0.1] - 2025-05-20
+- Code quality improvement.
+
 ## [1.0.0] - 2025-05-20
 ### Added
 - Cross-platform number formatting package with localization, compact mode, ordinal support, and more.

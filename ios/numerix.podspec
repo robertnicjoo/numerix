@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'numerix'
-  s.version          = '1.0.0'
+  s.version          = '1.0.1'
   s.summary          = 'A cross-platform number formatting package with localization, compact mode, and ordinal support.  By PT. Nicxon International Solutions'
   s.description      = <<-DESC
 A cross-platform number formatting package with localization, compact mode, and ordinal support.  By PT. Nicxon International Solutions
