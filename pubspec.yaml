@@ -3,7 +3,7 @@ description: "A cross-platform number formatting package with localization, comp
 version: 1.0.0
 homepage: https://github.com/robertnicjoo/numerix
 repository: https://github.com/robertnicjoo/numerix
-issue_tracker: hhttps://github.com/robertnicjoo/numerix/issues
+issue_tracker: https://github.com/robertnicjoo/numerix/issues
 
 environment:
   sdk: ^3.7.2
