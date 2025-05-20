@@ -300,7 +300,9 @@ class Numerix {
     final normalized = formatted
         .replaceAll(thousandSeparator, '')
         .replaceAll(decimalSeparator, '.');
-    return _localizeDigits(num.tryParse(normalized).toString() ?? "0");
+
+    final parsed = num.tryParse(normalized);
+    return _localizeDigits((parsed ?? 0).toString());
   }
 
   // 7. Format significant digits
