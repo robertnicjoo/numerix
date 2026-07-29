@@ -2,6 +2,9 @@
 
 All notable changes to the NumeriX package will be documented in this file.
 
+## [1.0.2] - 2026-07-29
+- Migrates the Android plugin Gradle configuration toward Flutter built-in Kotlin compatibility.
+
 ## [1.0.1] - 2025-05-20
 - Code quality improvement.
 
